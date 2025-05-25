@@ -1,7 +1,15 @@
-from fastapi import FastAPI, Request
-import requests
+from fastapi import FastAPI, Request, Depends, HTTPException
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
+import secrets
 
 app = FastAPI()
+security = HTTPBasic()
+
+def authenticate(credentials: HTTPBasicCredentials = Depends(security)):
+    correct_username = secrets.compare_digest(credentials.username, "hiroyuki.takada+clmdemo1@docusign.com")
+    correct_password = secrets.compare_digest(credentials.password, "8Brothers!123")
+    if not (correct_username and correct_password):
+        raise HTTPException(status_code=401, detail="Unauthorized")
 
 def number_to_japanese_units(n):
     if n < 1000:
