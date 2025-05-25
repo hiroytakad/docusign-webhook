@@ -30,13 +30,8 @@ def number_to_japanese_units(n):
     return "".join(result)
 
 @app.post("/webhook")
-async def webhook(request: Request):
+async def webhook(request: Request, credentials: HTTPBasicCredentials = Depends(authenticate)):
     payload = await request.json()
-
     numeric_value = int(payload.get("Numeric_Value", 0))
-    object_id = payload.get("objectId", "N/A")
-
     formatted = number_to_japanese_units(numeric_value)
-
-    print("Formatted:", formatted)
     return {"formatted_value": formatted}
