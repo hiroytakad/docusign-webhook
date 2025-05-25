@@ -6,8 +6,8 @@ app = FastAPI()
 security = HTTPBasic()
 
 def authenticate(credentials: HTTPBasicCredentials = Depends(security)):
-    correct_username = secrets.compare_digest(credentials.username, "hiroyuki.takada+clmdemo1@docusign.com")
-    correct_password = secrets.compare_digest(credentials.password, "8Brothers!123")
+    correct_username = secrets.compare_digest(credentials.username, BASIC_AUTH_USER)
+    correct_password = secrets.compare_digest(credentials.password, BASIC_AUTH_PASS)
     if not (correct_username and correct_password):
         raise HTTPException(status_code=401, detail="Unauthorized")
 
