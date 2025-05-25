@@ -25,7 +25,7 @@ def number_to_japanese_units(n):
 async def webhook(request: Request):
     payload = await request.json()
     numeric_value = int(payload.get("Numeric_Value", 0))
-    object_id = payload.get("objectId", "UNKNOWN")
+    object_id = payload.get("objectId", "")
 
     formatted = number_to_japanese_units(numeric_value)
 
