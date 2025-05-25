@@ -24,12 +24,11 @@ def number_to_japanese_units(n):
 @app.post("/webhook")
 async def webhook(request: Request):
     payload = await request.json()
+
     numeric_value = int(payload.get("Numeric_Value", 0))
-    object_id = payload.get("objectId", "")
+    object_id = payload.get("objectId", "N/A")
 
     formatted = number_to_japanese_units(numeric_value)
 
-    # (Optional) Update CLM API call here if you have token and endpoint
-    print(f"Formatted value: {formatted}, objectId: {object_id}")
+    print("Formatted:", formatted)
     return {"formatted_value": formatted}
-  
